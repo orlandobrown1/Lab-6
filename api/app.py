@@ -14,7 +14,7 @@ import requests
 app = FastAPI()
 
 origins = [
-    "https://rg-lab6-api.onrender.com",
+    "https://orlando-lab6.onrender.com",
 ]
 
 app.add_middleware(
