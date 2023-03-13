@@ -39,7 +39,7 @@ void loop() {
     String http_response;
 
 
-    String url = "/api/state";
+    String url = "https://orlando-lab6.onrender.com/api/temperature";
     http.begin(url);
       
       // Specify content-type header
@@ -75,6 +75,12 @@ void loop() {
         Serial.println(httpResponseCode);
       }
       delay(2000);
+      
+      http.end(); 
+      url = "https://orlando-lab6.onrender.com/api/temperature";    
+    http.begin(url);
+    httpResponseCode = http.GET();
+  
 
 
 
