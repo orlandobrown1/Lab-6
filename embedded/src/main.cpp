@@ -8,15 +8,21 @@
 
 const int fan_Pin = 22;
 const int light_Pin = 23;
+const int presence_pin = 24;
 
 float getvolt(){
   return random(21.0, 33.0);
+}
+float getpresence(){
+  return random(0, 1);
 }
 
 void setup() {
   Serial.begin(9600);
   pinMode(fan_Pin, OUTPUT);
   pinMode(light_Pin, OUTPUT);
+  pinMode(presence_pin, OUTPUT);
+
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   
   Serial.println("");
@@ -52,6 +58,7 @@ void loop() {
       // Serialise JSON object into a string to be sent to the API
     
       doc["temperature"] = getvolt();
+      doc["presence"]= getpresence();
 
 
       // convert JSON document, doc, to string and copies it into httpRequestData
@@ -117,8 +124,12 @@ void loop() {
       bool temp = doc["temperature"]; 
       digitalWrite(fan_Pin, temp);
 
-      bool sst = doc["sunset"]; 
+      bool sst = doc["light"]; 
       digitalWrite(light_Pin, sst);
+
+      bool set = doc["presence"];
+      digitalWrite(presence_pin, set); 
+
 
     http.end();
 
